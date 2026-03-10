@@ -50,15 +50,69 @@ import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
 
-class MainActivity : ComponentActivity() {
+class MotionLayout : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             CursoTheme {
+                // Usamos un Column para organizar el Header y el Slider
+                Column {
+                    var progress by remember { mutableStateOf(0f) }
 
+                    // Pasamos el progreso a la función
+                    ProfileHeader1(progress = progress)
+
+                    Spacer(modifier = Modifier.height(32.dp))
+
+                    Slider(
+                        value = progress,
+                        onValueChange = { progress = it },
+                        modifier = Modifier.padding(horizontal = 32.dp)
+                    )
+                }
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMotionApi::class, ExperimentalMotionApi::class)
+@Composable
+fun ProfileHeader1(progress: Float) { // Añadido el parámetro progress
+    val context = LocalContext.current
+
+    // Leemos el archivo JSON de la carpeta res/raw
+    val motionScene = remember {
+        context.resources.openRawResource(R.raw.motion_scene)
+            .readBytes()
+            .decodeToString()
+    }
+
+    MotionLayout(
+        motionScene = MotionScene(content = motionScene),
+        progress = progress,
+        modifier = Modifier.fillMaxWidth().height(300.dp) // Añade un alto para ver el efecto
+    ) {
+        val properties = motionProperties(id = "profile_pic")
+        Box(
+            modifier = Modifier
+                .background(Color.DarkGray)
+                .layoutId("box")
+        )
+        Image(
+            painter = painterResource(id = R.drawable.ic_home),
+            contentDescription = null,
+            modifier = Modifier
+                .clip(CircleShape)
+                .border(width = 2.dp, color = properties.value.color("background"), shape = CircleShape)
+                .layoutId("profile_pic")
+        )
+        Text(
+            text = "David",
+            fontSize = 24.sp,
+            color = Color.White,
+            modifier = Modifier.layoutId("username")
+        )
     }
 }
 
