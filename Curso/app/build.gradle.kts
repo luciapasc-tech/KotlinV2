@@ -61,4 +61,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("com.google.accompanist:accompanist-permissions:0.34.0")
     implementation ("androidx.constraintlayout:constraintlayout-compose:1.1.1")
+    implementation("androidx.compose.material:material-icons-extended")
 }
