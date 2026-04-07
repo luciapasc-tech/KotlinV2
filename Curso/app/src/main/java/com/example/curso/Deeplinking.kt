@@ -19,7 +19,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.curso.ui.theme.CursoTheme
 
-class MainActivity : ComponentActivity() {
+class Deeplinking : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
